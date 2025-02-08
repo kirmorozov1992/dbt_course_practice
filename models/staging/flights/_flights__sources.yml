@@ -72,6 +72,11 @@ sources:
            description: Время вылета по факту
          - name: actual_arrival
            description: Время прилета по факту
+        freshness:
+          warn_after: {count: 600000, period: hour}
+          error_after: {count: 10000, period: day}
+          filter: current_timestamp::date - actual_departure::date < 30000
+        loaded_at_field: actual_departure::timestamp
       - name: flights_v
         description: Представление Данные рейсов
         columns:
