@@ -1,0 +1,54 @@
+models:
+  - name: fct_bookings
+    description: Факты бронирований
+    docs:
+      show: true
+      node_color: red
+    latest_version: 1
+    versions:
+      - v: 1
+    config:
+      contract: {enforced: true}
+    meta:
+      owner: "kirmorozov1992@yandex.ru"
+      contact_tg: kirillmorozov1992
+      status: in_dev
+
+    columns:
+      - name: book_ref
+        data_type: varchar(8)
+        constraints:
+          - type: not_null
+      - name: book_date
+        data_type: timestamptz
+      - name: total_amount
+        data_type: numeric(10, 2)
+        constraints:
+          - type: check
+            expression: "total_amount > 0"
+        tests:
+          - not_null
+        meta:
+          owner: finance_team
+  - name: fct__ticket_flight
+    description: Факты билетов и перелетов
+    docs:
+      show: true
+      node_color: green
+    meta:
+      owner: "kirmorozov1992@yandex.ru"
+
+    columns:
+      - name: ticket_no
+        constraints:
+          - type: not_null
+      - name: tf.flight_id
+      - name: fare_conditions
+      - name: amount
+        constraints:
+          - type: check
+            expression: "amount > 0"
+      - name: boarding_pass_exists
+      - name: boarding_no
+      - name: seat_no
+      - name: load_date
